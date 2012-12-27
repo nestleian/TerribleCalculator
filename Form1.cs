@@ -105,7 +105,7 @@ namespace CalculatorTest
             if (operatorPress < 2)
             {
                 textBox1.AppendText("9");
-                numbers.Add(8);
+                numbers.Add(9);
             }
         }
 
