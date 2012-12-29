@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,11 +13,11 @@ namespace CalculatorTest
     {
 
         Maths maths = new Maths();
-        public List<int> numbers = new List<int>();
 
-        public int firstSet;
-        public int secondSet;
-        string tempSet;
+        public string numberString = "";
+
+        public decimal firstSet;
+        public decimal secondSet;
 
         public string OperatorChoice;
 
@@ -28,103 +28,81 @@ namespace CalculatorTest
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addDigitPress(int digit)
         {
             if (operatorPress < 2)
             {
-                textBox1.AppendText("1");
-                numbers.Add(1);
+                textBox1.AppendText(digit.ToString());
+                numberString += digit.ToString();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            addDigitPress(1);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (operatorPress < 2)
-            {
-                textBox1.AppendText("2");
-                numbers.Add(2);
-            }
+            addDigitPress(2);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (operatorPress < 2)
-            {
-                textBox1.AppendText("3");
-                numbers.Add(3);
-            }
+            addDigitPress(3);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (operatorPress < 2)
-            {
-                textBox1.AppendText("4");
-                numbers.Add(4);
-            }
+            addDigitPress(4);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (operatorPress < 2)
-            {
-                textBox1.AppendText("5");
-                numbers.Add(5);
-            }
+            addDigitPress(5);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (operatorPress < 2)
-            {
-                textBox1.AppendText("6");
-                numbers.Add(6);
-            }
+            addDigitPress(6);
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (operatorPress < 2)
-            {
-                textBox1.AppendText("7");
-                numbers.Add(7);
-            }
+            addDigitPress(7);
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            if (operatorPress < 2)
-            {
-                textBox1.AppendText("8");
-                numbers.Add(8);
-            }
+            addDigitPress(8);
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            if (operatorPress < 2)
-            {
-                textBox1.AppendText("9");
-                numbers.Add(9);
-            }
+            addDigitPress(9);
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            if (operatorPress < 2)
+            addDigitPress(0);
+        }
+
+        private void decimalPointButton_Click(object sender, EventArgs e)
+        {
+            if (operatorPress < 2 && numberString.Count() > 0)
             {
-                textBox1.AppendText("0");
-                numbers.Add(0);
+                textBox1.AppendText(".");
+                numberString += ".";
             }
         }
 
         private void clearButton_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
-            numbers.Clear();
             firstSet = 0;
             secondSet = 0;
             operatorPress = 0;
+            numberString = "";
         }
 
         private void plusButton_Click(object sender, EventArgs e)
@@ -140,7 +118,6 @@ namespace CalculatorTest
             {
                 MessageBox.Show("Can only handle two sets of numbers. Sorry, friend.");
             }
-            numbers.Clear();
             OperatorChoice = "Add";
         }
 
@@ -156,7 +133,6 @@ namespace CalculatorTest
             {
                 MessageBox.Show("Can only handle two sets of numbers. Sorry, friend.");
             }
-            numbers.Clear();
             OperatorChoice = "Subtract";
         }
 
@@ -164,23 +140,14 @@ namespace CalculatorTest
         {
             if (firstSet <= 0)
             {
-                foreach (int temp in numbers)
-                {
-                    tempSet += temp.ToString();
-                }
-
-                firstSet = int.Parse(tempSet);
-                tempSet = "";
+                firstSet = decimal.Parse(numberString);
+                numberString = "";
             }
 
             else
             {
-                foreach (int temp in numbers)
-                {
-                    tempSet += temp.ToString();
-                }
-                secondSet = int.Parse(tempSet);
-                tempSet = "";
+                secondSet = decimal.Parse(numberString);
+                numberString = "";
             }
 
         }
@@ -197,7 +164,6 @@ namespace CalculatorTest
             {
                 MessageBox.Show("Can only handle 2 sets of numbers. Sorry, bro.");
             }
-            numbers.Clear();
             OperatorChoice = "Division";
         }
 
@@ -213,7 +179,6 @@ namespace CalculatorTest
             {
                 MessageBox.Show("Can only handle 2 sets of numbers. Sorry, bro.");
             }
-            numbers.Clear();
             OperatorChoice = "Times";
         }
 
@@ -229,7 +194,7 @@ namespace CalculatorTest
 
             if (OperatorChoice == "Add")
             {
-                textBox1.AppendText(maths.Subtraction(firstSet, secondSet).ToString());
+                textBox1.AppendText(maths.Addition(firstSet, secondSet).ToString());
             }
 
             if (OperatorChoice == "Division")
